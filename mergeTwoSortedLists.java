@@ -4,8 +4,8 @@ public class Solution{
 		ListNode dummyNode = new ListNode(0);
 		ListNode tail = dummyNode;
 
-		while(head1.val != null && head2.val != null){
-			if (head1 < head2){
+		while(head1 != null && head2 != null){
+			if (head1.val < head2.val){
 				tail.next = head1;
 				head1 = head1.next;
 			}else{
