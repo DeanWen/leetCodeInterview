@@ -11,14 +11,9 @@ public class Solution {
 		int start = 0;
 		int end = A.length - 1;
 
-		if (A[start] == target) {
-			return start;
-		}
-		if (A[end] == target) {
-			return end;
-		}
-
+		// start + 1 < end to ensure mid exist
 		while (start + 1 < end) {
+			//
 			int mid = start + (end - start) / 2;
 
 			if (target == A[mid]) {
@@ -29,5 +24,14 @@ public class Solution {
 				end = mid;
 			}
 		}
+
+		if (A[start] == target) {
+			return start;
+		}
+		if (A[end] == target) {
+			return end;
+		}
+
+		return -1;
 	}	
 }
