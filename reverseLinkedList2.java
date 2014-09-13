@@ -14,7 +14,7 @@ public class Solution {
         prev = null;
         current = tail;
         next = current.next;
-        while(step > 0 && next != null){
+        while(step > 0 && next != null) {
             prev = current;
             current = next;
             next = prev;
