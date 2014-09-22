@@ -24,7 +24,7 @@ public class Solution {
         //post order is left, right, root
         helper(root.left, result);//go through left
         helper(root.right, result);//go through right
-        result.add(root.val);//go through root 
+        result.add(root.val);//go through root      
 
     }
 }
