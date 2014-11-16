@@ -26,7 +26,7 @@ public class findMaximum {
         
 		int m = box.length;
 		int n = box[0].length;
-		int max = 0;
+		int max = 1; //At least 1 row in same after flip
 		HashMap<ArrayList<Integer>, Integer> map = new HashMap<ArrayList<Integer>, Integer>();
         
 		/*The time complexity is O(m)*/
