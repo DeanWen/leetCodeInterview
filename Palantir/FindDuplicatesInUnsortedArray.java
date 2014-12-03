@@ -9,11 +9,13 @@ public boolean isDuplicate(int[] array) {
 	if (array == null || array.length == 0) {
 		return false;
 	}
+
+	HashSet<Integer> set = new HashSet<Integer>();
 	//O(n)
-	List<Integer> list = new ArrayList<Integer>();
 	for (int i = 0; i < array.length; i++) {
-		if (!list.contains(array[i])) {
-			list.add(array[i]);
+		//O(1)
+		if (!set.contains(array[i])) {
+			set.add(array[i]);
 		}else {
 			return true;
 		}
@@ -22,6 +24,17 @@ public boolean isDuplicate(int[] array) {
 	return false;
 }
 
+	public static boolean isDuplicate(int arr[], int size){
+	  for (int i = 0; i < size; i++) {
+	    if (arr[Math.abs(arr[i])] >= 0) {
+	    	arr[Math.abs(arr[i])] = -arr[Math.abs(arr[i])];
+	    }else {
+	    	System.out.print(Math.abs(arr[i]));
+	    	return true;
+	    }
+	  }
+	  return false;
+	}
 /*
 *
 *Given an array of integers and an integer k. It
@@ -36,14 +49,16 @@ public static boolean isDuplicate(int[] array, int k) {
 	if (array == null || array.length == 0 || k == 0) {
 		return false;
 	}
-	//O(n)
+	
 	HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+	//O(n)
 	for (int index = 0; index < array.length; index++) {
+		//O(1)
 		if (!map.containsKey(array[index])) {
 			map.put(array[index], index);
 		}else {
 			int prevIndex = map.get(array[index]);
-			if (index - prevIndex >= k) {
+			if (index - prevIndex <= k) {
 				return true;
 			}
 		}
@@ -52,27 +67,58 @@ public static boolean isDuplicate(int[] array, int k) {
 	return false;
 }
 
+public static boolean isDuplicate(int[] array, int k) {
+	if (array == null || array.length == 0 || k == 0) {
+		return false;
+	}
+	
+	//O(n)
+	final int capacity = k;
+	Map<Integer, Integer> lmap = new LinkedHashMap<Integer, Integer>(capacity, 0.75f, true) {
+	    @Override
+	    protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+	    return size() > capacity;
+	    }
+	};
+     
+	//O(n)
+	for (int index = 0; index < array.length; index++) {
+		//O(1)
+		if (!lmap.containsKey(array[index])) {
+			lmap.put(array[index], index);
+		}else {
+			int prevIndex = lmap.get(array[index]);
+			if (index - prevIndex <= k) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+
 /*
 *Given an unsorted list of integers, 
 *return true if the list contains any fuzzy duplicates within k indices of each element. 
 *A fuzzy duplicate is another integer within d of the original integer. 
 *Example: 
-*	[1, 0, 2, 1] k = 3  d = 4 (2 - 1 = 1 < 4) -- true
-*	[1, 0, 2, 7] k = 3  d = 4 (7 - 1 = 6 > 4) -- false
+*	[1, 5, 2, 9] k = 2  d = 1 (2 - 1 = a[0]-a[2] <= 2) -- true
+*	[1, 5, 9, 2] k = 2  d = 1 (2 - 1 = a[0]-a[3] > 2) -- false
 */
 public static boolean isDuplicate(int[] array, int k, int d) {
 	if (array == null || array.length == 0 || k == 0) {
 		return false;
 	}
-	//O(k*n)
+	
+	//Overall O(k*n)
 	for (int index = 0; index < array.length; index++) {
 		int count = index > k ? k : index;
-		while (count-- > 0) {
-			if (array[index] - array[index - count] <= d) {
+		while (--count >= 0) {			
+			if (array[index] - array[index - count - 1] <= d 
+				&& array[index] - array[index - count -1] >= -d) {
 				return true;
 			}
 		}
 	}
-
 	return false;
 }
