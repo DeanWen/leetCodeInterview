@@ -1,4 +1,32 @@
 /*
+Find All Valid Cut of Prime Number in an array
+Divide & Conquer Questions
+*/
+public ArrayList<Integer> allValidCut (int[] array) {
+	if (array == null || array.length == 0) {
+		return null;
+	}
+
+	int start = 0;
+	int end = 0;
+	while (end < array.length) {
+		if () {
+			
+		}
+	}
+}
+
+public ArrayList<Integer> helper (int[] array, int start) {
+	int start = start;
+
+	if (isPrime(array, 0, start)) {
+		
+	}
+}
+
+
+
+/*
 Consider you wanna fabricate a anonymous letter whose words and abcdef...
 are cut off from a news paper. So the question is, if this news paper 
 could compose all the alphabetics you need. 
