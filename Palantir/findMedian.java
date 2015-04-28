@@ -47,8 +47,6 @@ public class findMedian {
 			} else {
 				break;
 			}
-		}
-		
+		}		
 	}
-	
 }

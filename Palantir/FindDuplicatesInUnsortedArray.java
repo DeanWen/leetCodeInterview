@@ -60,6 +60,8 @@ public static boolean isDuplicate(int[] array, int k) {
 			int prevIndex = map.get(array[index]);
 			if (index - prevIndex <= k) {
 				return true;
+			} else {
+				map.put(array[index], index);
 			}
 		}
 	}
@@ -90,6 +92,8 @@ public static boolean isDuplicate(int[] array, int k) {
 			int prevIndex = lmap.get(array[index]);
 			if (index - prevIndex <= k) {
 				return true;
+			}else {
+				map.put(array[index], index);
 			}
 		}
 	}
