@@ -38,8 +38,9 @@ public class Solution {
             //fist check all following characrer in s to match char*
             while (s.length() > 0 
             	&& (p.charAt(0) == s.charAt(0) || p.charAt(0) == '.')) {
-                if (isMatch(s, p.substring(2))) 
+                if (isMatch(s, p.substring(2))) {
                     return true;
+                }
                 s = s.substring(1);
             }
             //then elimate the p by 2 characters
