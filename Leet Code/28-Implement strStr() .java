@@ -23,6 +23,29 @@
 */
 public class Solution {
     public int strStr(String haystack, String needle) {
+        if (haystack == null || needle == null) return -1;
+        if (haystack.isEmpty() && needle.isEmpty()) return 0; 
+        
+        int i, j;
+        int diff = haystack.length() - needle.length();
+        for (i = 0; i <= diff; i++) {
+            for (j = 0; j < needle.length(); j++) {
+                if (haystack.charAt(i + j) != needle.charAt(j)) {
+                    break;
+                }
+            }
+            if (j == needle.length()) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
+}
+
+//clean code
+public class Solution {
+    public int strStr(String haystack, String needle) {
     	for (int i = 0; ; i++) {
     		for (int j = 0; ; j++) {
     			if (j == needle.length()) {
@@ -38,6 +61,7 @@ public class Solution {
     	}
     }
 }
+
 
 /*
 * Solution 2
