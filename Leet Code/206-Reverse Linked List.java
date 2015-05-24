@@ -21,3 +21,16 @@ public class Solution {
 		return pre;
 	}
 }
+
+//2nd recursion
+
+public Node reverseLinkedList(Node curr, Node prev) {
+	if (curr.next == null) {
+		curr.next = prev;
+		return curr;
+	}else {
+		Node temp = reverseLinkedList(curr.next, curr);
+		curr.next = prev;
+		return temp;
+	}
+}
