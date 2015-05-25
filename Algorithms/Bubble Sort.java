@@ -3,25 +3,6 @@
 */
 
 public class BubbleSort {
-	public static void main(String[] args) {
-		int[] array = new int [args.length];
-
-		for(int i = 0; i < args.length; i++) {
-			array[i] = Integer.parseInt(args[i]);
-		}
-
-		printOut(bubbleSortAscending(array));
-		System.out.println();
-		printOut(bubbleSortDescending(array));
-		System.out.println();
-	}
-
-	public static void printOut(int[] array){
-		for(int i = 0; i < array.length; i++){
-			System.out.print(array[i]+ " ");
-		}
-	}
-
 	public static int[] bubbleSortAscending(int[] array) {
 		for (int i = 0; i < array.length; i++ ) {
 			for (int j = 1; j < array.length - i; j++){
@@ -48,5 +29,25 @@ public class BubbleSort {
 		}
 
 		return array;
+	}
+
+	/*Main for Test*/
+	public static void main(String[] args) {
+		int[] array = new int [args.length];
+
+		for(int i = 0; i < args.length; i++) {
+			array[i] = Integer.parseInt(args[i]);
+		}
+
+		printOut(bubbleSortAscending(array));
+		System.out.println();
+		printOut(bubbleSortDescending(array));
+		System.out.println();
+	}
+
+	public static void printOut(int[] array){
+		for(int i = 0; i < array.length; i++){
+			System.out.print(array[i]+ " ");
+		}
 	}
 }
