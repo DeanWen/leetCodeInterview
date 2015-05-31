@@ -8,6 +8,9 @@ public class Solution {
 		}
 	}
 
+	//Unsorted array to find Top K
+	//Time Complexity: O(n)
+	//Space Complexity: O(nlogk)
 	public static List<Integer> findTopK (int[] nums, int k) {
 		List<Integer> res = new ArrayList<Integer>();
 		if (nums == null || nums.length == 0) {
@@ -62,6 +65,32 @@ public class Solution {
 
 		for (Integer i : res) {
 			System.out.print(i);
+		}
+	}
+
+	//Follow Up a sorted stream
+	//Space Complexity: O(k)
+	//Time Complexity: O(nlogk)
+	public static void findTopK(int k) {
+		PriorityQueue<Element> pq = new PriorityQueue<Element>(k + 1, new myComparator());
+
+		Scanner in = new Scanner(System.in);
+		int prev = in.nextInt();
+		int freq = 1;
+		while (in.hasNext()) {
+			int curr = in.nextInt();
+			if (curr == prev) {
+				freq++;
+				continue;
+			}
+
+			Element ele = new Element(prev, freq);
+			pq.offer(e);
+			if (pq.size() >= k + 1) {
+				pq.poll();
+			}
+			prev = curr;
+			freq = 1;
 		}
 	}
 }
