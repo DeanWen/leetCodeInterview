@@ -11,7 +11,25 @@ public class Solution {
 			parent = null;
 		}
 	}
+
+	//Provide Parent Pointer
+	public static TreeNode nextNode(TreeNode node){
+		if (node.right != null) {
+			TreeNode curr = node.right;
+			while (curr.left != null) {
+				curr = curr.left;
+			}
+			return curr;
+		}else {
+			TreeNode curr = node;
+			while (curr.parent != null && curr == curr.parent.right) {
+				curr = curr.parent;
+			}
+			return curr.parent;
+		} 
+	}
 	
+	//no parent pointer
 	public static TreeNode nextNode (TreeNode root, TreeNode node) {
 		if (node.right != null) {
 			TreeNode curr = node.right;
@@ -32,21 +50,5 @@ public class Solution {
 			}
 			return parent;
 		}
-	}
-
-	public static TreeNode nextNode(TreeNode node){
-		if (node.right != null) {
-			TreeNode curr = node.right;
-			while (curr.left != null) {
-				curr = curr.left;
-			}
-			return curr;
-		}else {
-			TreeNode curr = node;
-			while (curr.parent != null && curr == curr.parent.right) {
-				curr = curr.parent;
-			}
-			return curr.parent;
-		} 
 	}
 }
