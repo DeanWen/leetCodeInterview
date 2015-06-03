@@ -16,22 +16,7 @@ public class SortColor {
         arr[i] = arr[j];
         arr[j] = temp;
     }
-    
-    public static class myComparator implements Comparator<Color> {
-        @Override
-        public int compare(Color o1, Color o2) {
-            return o1.value - o2.value;
-        }
-    }
-    
-    //O(nlogn)
-    public static void sort2(Color[] arr) {
-        if (arr == null || arr.length == 0) {
-            return;
-        }   
-        Arrays.sort(arr, new myComparator());
-    }
-    
+
     //O(n)
     public static void sort(Color[] arr) {
         if (arr == null || arr.length == 0) {
@@ -53,6 +38,21 @@ public class SortColor {
                 rightBound--;
             }
         }
+    }
+    
+    public static class myComparator implements Comparator<Color> {
+        @Override
+        public int compare(Color o1, Color o2) {
+            return o1.value - o2.value;
+        }
+    }
+    
+    //O(nlogn)
+    public static void sort2(Color[] arr) {
+        if (arr == null || arr.length == 0) {
+            return;
+        }   
+        Arrays.sort(arr, new myComparator());
     }
     
     public static void main(String[] args) {
