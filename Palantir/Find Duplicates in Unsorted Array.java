@@ -109,20 +109,27 @@ public static boolean isDuplicate(int[] array, int k) {
 *	[1, 5, 2, 9] k = 2  d = 1 (2 - 1 = a[0]-a[2] <= 2) -- true
 *	[1, 5, 9, 2] k = 2  d = 1 (2 - 1 = a[0]-a[3] > 2) -- false
 */
-public static boolean isDuplicate(int[] array, int k, int d) {
-	if (array == null || array.length == 0 || k == 0) {
-		return false;
-	}
-	
-	//Overall O(k*n)
-	for (int index = 0; index < array.length; index++) {
-		int count = index > k ? k : index;
-		while (--count >= 0) {			
-			if (array[index] - array[index - count - 1] <= d 
-				&& array[index] - array[index - count -1] >= -d) {
-				return true;
-			}
-		}
-	}
-	return false;
+public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+    if (nums == null || nums.length == 0 || k <= 0) {
+        return false;
+    }
+
+    TreeSet<Integer> values = new TreeSet<>();
+    for (int ind = 0; ind < nums.length; ind++) {
+
+        Integer floor = values.floor(nums[ind] + t);//upper bond
+        Integer ceil = values.ceiling(nums[ind] - t);//lower bond
+        
+        if ((floor != null && floor >= nums[ind])
+                || (ceil != null && ceil <= nums[ind])) {
+            return true;
+        }
+
+        values.add(nums[ind]);
+        if (ind >= k) {
+            values.remove(nums[ind - k]);
+        }
+    }
+
+    return false;
 }
