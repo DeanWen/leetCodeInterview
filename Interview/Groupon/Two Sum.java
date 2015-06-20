@@ -1,5 +1,5 @@
 //Two Sum with no duplicate
-public int[] towSum(int[] arr, int sum) {
+public int[] twoSum(int[] arr, int sum) {
 	if (arr == null || arr.length == 0) {
 		return null;
 	}
