@@ -31,3 +31,26 @@ public class Solution {
         }
     }
 }
+
+//recursion
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        TreeLinkNode current = root;
+        if (current == null) {
+            return;
+        }
+        if (current.left != null) {
+            current.left.next = current.right;
+        }
+        if (current.right != null) {
+            if (current.next == null) {
+                current.right.next = null;
+            }else {
+                current.right.next = current.next.left;
+            }
+        }
+        
+        connect(current.left);
+        connect(current.right);
+    }
+}
