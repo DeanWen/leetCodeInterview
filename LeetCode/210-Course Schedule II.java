@@ -1,3 +1,60 @@
+//DFS Solution
+//Time Complexity O(E + V)
+//Space Complexity O(E + V)
+public class Solution {
+    private int index;
+    public int[] findOrder(int num, int[][] edges) {
+        Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+        for (int[] pair : edges) {
+            if (!map.containsKey(pair[1])) {
+                List<Integer> list = new LinkedList<>();
+                list.add(pair[0]);
+                map.put(pair[1], list);
+            }else {
+                map.get(pair[1]).add(pair[0]);
+            }
+        }
+        
+        int[] visited = new int[num];
+        int[] res = new int[num];
+        index = res.length - 1;
+        for (int i = 0; i < num; i++) {
+            if (visited[i] == 0) { //Only Run Unvisited Node
+                if (!topsort(visited, map, i, res)) {
+                    return new int[0];//if detected a cycle return []
+                }
+            }
+        }
+        
+        return res;
+    }
+    /*
+    * Using -1, 0, 1 represents 3 states of node
+    * inorder to detect cycle
+    * 0  : no visit
+    * -1 : visiting
+    * 1  : complete 
+    */
+    private boolean topsort (int[] visited, Map<Integer, List<Integer>> map, int it, int[] res) {
+        if (visited[it] == -1) return false;
+        if (visited[it] == 1) return true;
+        
+        visited[it] = -1;
+        if (map.containsKey(it)) {
+            for (Integer neighbor : map.get(it)) {
+                if (!topsort(visited, map, neighbor, res)) {
+                        return false;
+                }
+            }
+        }
+        visited[it] = 1;
+        
+        res[index--] = it;
+        return true;
+    }
+}
+
+
 //BFS Solution
 public class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {

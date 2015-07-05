@@ -1,55 +1,45 @@
 //DFS 
 public class Solution {
-    public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int len = prerequisites.length;
-     
-        if(numCourses == 0 || len == 0){
-            return true;
-        }
-     
-        //track visited courses
-        int[] visit = new int[numCourses];
-     
-        // use the map to store what courses depend on a course 
-        HashMap<Integer,ArrayList<Integer>> map = new HashMap<Integer,ArrayList<Integer>>();
-        for(int[] a: prerequisites){
-            if(map.containsKey(a[1])){
-                map.get(a[1]).add(a[0]);
-            }else{
-                ArrayList<Integer> l = new ArrayList<Integer>();
-                l.add(a[0]);
-                map.put(a[1], l);
+    public static boolean canFinish(int num, int[][] edges) {
+        Map<Integer, List<Integer>> map = new HashMap<Integer, List<Integer>>();
+        for (int[] pair : edges) {
+            if (!map.containsKey(pair[1])) {
+                List<Integer> list = new LinkedList<>();
+                list.add(pair[0]);
+                map.put(pair[1], list);
+            }else {
+                map.get(pair[1]).add(pair[0]);
             }
         }
-     
-        for(int i=0; i<numCourses; i++){
-            if(!canFinishDFS(map, visit, i))
+        
+        int[] visited = new int[num];
+        List<Integer> res = new LinkedList<>();
+        for (int i = 0; i < num; i++) {
+            if (!topsort(visited, map, i)){
                 return false;
+            }
         }
-     
+
         return true;
     }
-     
-    private boolean canFinishDFS(HashMap<Integer,ArrayList<Integer>> map, int[] visit, int i){
-        if(visit[i]==-1) 
-            return false;
-        if(visit[i]==1) 
-            return true;
-     
-        visit[i]=-1;
-        if(map.containsKey(i)){
-            for(int j: map.get(i)){
-                if(!canFinishDFS(map, visit, j)) 
-                    return false;
+    
+    private static boolean topsort (int[] visited, Map<Integer, List<Integer>> map, int it) {
+        if (visited[it] == -1) return false;
+        if (visited[it] == 1) return true;
+        
+        visited[it] = -1;
+        if (map.containsKey(it)) {
+            for (Integer neighbor : map.get(it)) {
+                if (!topsort(visited, map, neighbor)) {
+                        return false;
+                }
             }
         }
-     
-        visit[i]=1;
-     
+        visited[it] = 1;
+        
         return true;
     }
 }
-
 
 
 //BFS
