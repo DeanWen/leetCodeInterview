@@ -56,13 +56,35 @@ public class Solution {
 		return list;
 	}
 
+	public List<Integer> postTraversal(TreeNode root) {
+		List<Integer> list = new LinkedList<Integer>();
+		if (root == null) {
+			return list;
+		}
+
+		Stack<TreeNode> stack = new Stack<TreeNode>();
+		TreeNode curr = root;
+		while (curr != null) {
+			list.add(0, curr.val);
+			if (curr.left != null) {
+				stack.push(curr.left);
+			}
+			curr = curr.right;
+			if (curr == null || !stack.isEmpty()) {
+				curr = stack.pop();
+			}
+		}
+
+		return list;
+	}
+
 	public ArrayList<Integer> postTraversal(TreeNode root) {
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		if (root == null) {
 			return list;
 		}
 
-		Stack<Integer> stack = new Stack<Integer>();
+		Stack<TreeNode> stack = new Stack<TreeNode>();
 		stack.push(root);
 
 		TreeNode prev = null;
