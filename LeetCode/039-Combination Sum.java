@@ -24,6 +24,7 @@ public class Solution {
         for (int i = start; i < candidates.length; i++) {
             item.add(candidates[i]);
             int newTarget = target - candidates[i];
+            //one digit can be used multiple times, next round so start from i
             helper(result, item, candidates, newTarget, i);
             item.remove(item.size() - 1);
         }
