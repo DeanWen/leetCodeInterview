@@ -1,26 +1,15 @@
 public class Solution {
     public int removeDuplicates(int[] nums) {
-        if (nums == null || nums.length == 0) {
-            return 0;
-        }
-        if (nums.length < 3) {
-            return nums.length;
-        }
-        
-        int newLen = 0;
         int count = 0;
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i - 1] == nums[i]) {
+        for (int num : nums) {
+            //allow dups appear twice, so we have two case
+            //1. count < 2
+            //2. the third one should greater than two ahead of itself
+            if (count < 2 || num > nums[count - 2]) {
+                nums[count] = num;
                 count++;
-            }else {
-                count = 0;
             }
-            
-            if (count < 2) {
-                newLen++;
-            }
-            nums[newLen] = nums[i];
         }
-        return newLen + 1;
+        return count;
     }
 }
