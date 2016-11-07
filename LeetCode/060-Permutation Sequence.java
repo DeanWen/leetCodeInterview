@@ -1,37 +1,35 @@
-//http://www.cnblogs.com/tenosdoit/p/3721918.html
-
+//https://discuss.leetcode.com/topic/17348/explain-like-i-m-five-java-solution-in-o-n
+//pattern is like k = k - (index from previous) * (n-1)! = k - 2*(n-1)! = 13 - 2*(3)! = 1
 public class Solution {
-   public String getPermutation(int n, int k) {  
-        k--;//to transfer it as begin from 0 rather than 1
+    public String getPermutation(int n, int k) {
+        List<Integer> numbers = new LinkedList<>();
+        int[] factorial = new int[n + 1];
+        StringBuilder sb = new StringBuilder();
         
-        List<Integer> numList = new ArrayList<Integer>();  
-        for(int i = 1; i <= n; i++) {
-            numList.add(i);
+        // create an array of factorial lookup
+        int sum = 1;
+        factorial[0] = 1;
+        for(int i = 1; i <= n; i++){
+            sum *= i;
+            factorial[i] = sum;
         }
-       
-       /*
-        * factorial = (n-1)!
-        */
-        int factorial = 1;    
-        for(int i = 2; i < n; i++) { 
-            factorial *= i;    
-        }
+        // factorial[] = {1, 1, 2, 6, 24, ... n!}
         
-        StringBuilder res = new StringBuilder();
-        int times = n - 1;
-        while (times >= 0) {
-            int indexInList = k / factorial;
-            res.append(numList.get(indexInList));  
-            numList.remove(indexInList);  
-            
-            k = k % factorial;//new k for next turn
-            if(times != 0) {
-                factorial = factorial / times;//new (n-1)!
-            }
-            
-            times--;
+        // create a list of numbers to get indices
+        for(int i = 1; i <= n; i++){
+            numbers.add(i);
+        }
+        // numbers = {1, 2, 3, 4}
+        
+        k--;
+        
+        for(int i = 1; i <= n; i++){
+            int index = k / factorial[n - i];
+            sb.append(numbers.get(index));
+            numbers.remove(index);
+            k -= index * factorial[n - i];
         }
         
-        return res.toString();
+        return sb.toString();
     }
 }
