@@ -1,59 +1,38 @@
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
-
-//leet code
-
-
-
-public class RotateImage {
-	
-	public void test(){
-		int[][] data = {{1,2},{3,4}};
-		this.sol(data);	
-		System.out.println();
-	}
-	
-	public void sol(int[][] matrix) {
-        if(matrix.length < 2) return;
-    
-        rotate90(matrix);
-    }
-    
-    public void rotate90(int[][] matrix){
-        this.transpose(matrix);
-        this.reverseRow(matrix);
-    }
-    
-    public void transpose(int[][] matrix){
-        int n  = matrix.length;
-        for(int i = 0; i < matrix.length - 1; i++){
-            for(int j = 0; j < n - i - 1; j++){
-                swap(matrix, i,j, n-1-j, n-1-i);
-            }
-        }
-    }
-    
-    public void reverseRow(int[][] matrix){
+//in place, clock-wise line by line
+public class Solution {
+    public void rotate(int[][] matrix) {
         int n = matrix.length;
-        int head = 0;
-        int tail = n-1;
-        
-        while(head < tail){
-            for(int i = 0; i <  n; i++){
-                swap(matrix,head,i,tail,i);
+        for(int y = 0; y < n / 2; y++){
+            for(int x = y; x < n - 1 - y; x++){
+                int temp = matrix[y][x];
+                temp = move(matrix, temp, (n - 1) - y, x);
+                temp = move(matrix, temp, (n - 1) - x, (n - 1) - y);
+                temp = move(matrix, temp, y, (n - 1) - x);
+                temp = move(matrix, temp, x, y);
             }
-            head++;
-            tail--;
         }
     }
     
-    public void swap(int[][] matrix, int beforeRow, int beforeCol, int afterRow, int afterCol){
-        if(beforeRow == afterRow && beforeCol == afterCol) return;
-        int temp = matrix[beforeRow][beforeCol];
-        matrix[beforeRow][beforeCol] = matrix[afterRow][afterCol];
-        matrix[afterRow][afterCol] = temp;
+    public int move(int[][]matrix, int val, int x, int y){
+        int store = matrix[y][x];
+        matrix[y][x] = val;
+        return store;
+    }
+}
+
+//straghtforwarded the pattern is [x][y] -> [y][n - 1 - x]
+public class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        int[][] target = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            System.arraycopy(matrix[i], 0, target[i], 0, n);
+        }
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrix[j][n - 1 - i] = target[i][j];
+            }
+        }
     }
 }
