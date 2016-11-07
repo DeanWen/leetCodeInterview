@@ -1,35 +1,37 @@
 public class Solution {
-    public List<List<Integer>> combinationSum2(int[] num, int target) {
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
-        if (num == null || num.length == 0) {
-            return result;
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> res = new LinkedList<>();
+        if (candidates == null || candidates.length == 0) {
+            return res;
         }
         
-        List<Integer> list = new ArrayList<Integer>();
-        Arrays.sort(num);
-        helper(result, list, num, target, 0);
-        return result;
+        Arrays.sort(candidates);
+        List<Integer> list = new LinkedList<>();
+        boolean[] visited = new boolean[candidates.length];
+        helper(res, list, candidates, visited, target, 0);
+        return res;
     }
     
-    public void helper(List<List<Integer>> result, List<Integer> list, int[] num, int target, int position) {
+    private void helper(List<List<Integer>> res, List<Integer> list, int[] candidates, boolean[] visited, int target, int pos) {
+        if (target < 0) return;
         if (target == 0) {
-            result.add(new ArrayList<Integer>(list));
+            res.add(new LinkedList<>(list));
             return;
         }
         
-        int prev = -1;
-        for (int i = position; i < num.length; i++) {
-            if (num[i] > target) {
-                break;
+        for (int i = pos; i < candidates.length; i++) {
+            if (visited[i]) {
+                continue;//ensure one element only appear once
             }
-            if (prev != -1 && prev == num[i]) {
-                continue;
+            if (i > 0 && candidates[i] == candidates[i - 1] && !visited[i - 1]) {
+                continue;//hanlde duplicates
             }
             
-            list.add(num[i]);
-            helper(result, list, num, target - num[i], i + 1);
+            list.add(candidates[i]);
+            visited[i] = true;
+            helper(res, list, candidates, visited, target - candidates[i], i + 1);
+            visited[i] = false;
             list.remove(list.size() - 1);
-            prev = num[i];
         }
     }
 }
