@@ -1,20 +1,12 @@
 //7/10 passed, 3 timed out
-public int countUneatenLeaves(int N, int[] A) {
-	int uneatenLeaves = 0;
-	int ASize = A.length;
-	int countEaten = 0;
-
-	HashMap<Integer,Integer> positionEatenHash = new HashMap<Integer,Integer>();
-	for( int i = 0; i < ASize; i++ ){
-		int catervalue = A[i];
-		for(int j = 1; j*catervalue <= N; j++){
-			if(!positionEatenHash.containsKey(A[i]*j)){
-				positionEatenHash.put(A[i]*j, 1);
-				countEaten++;
-			}
+public int countUneatenLeaves(int n, int[] a) {
+	BitSet leaves = new BitSet(n);
+	for (int j = 0; j < a.length; j++) {
+		if(leaves.get(a[j])) continue;
+        for (int i = a[j]; i <= n; i = i + a[j]) {
+        	leaves.set(i);
 		}
 	}
-	uneatenLeaves = N - countEaten;
-	return uneatenLeaves;
+	return n - leaves.cardinality();
 }
 
